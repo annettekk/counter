@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import kv from "@vercel/kv"
 import styles from './page.module.css'
 
 export default async function Home() {
@@ -6,8 +6,10 @@ export default async function Home() {
   const data = await res.json()
   console.log(data)
   //Tim is The Best!
+  const pageViews = await kv.incr("views")
   return (
     <main className={styles.main}>
+      <p>{pageViews}</p>
       {data.stargazers_count}
     </main>
   )
